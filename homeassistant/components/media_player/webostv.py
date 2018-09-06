@@ -383,9 +383,10 @@ class LgWebOSDevice(MediaPlayerDevice):
 
     def media_pause(self):
         """Send media pause command to media player."""
-        self._playing = False
-        self._state = STATE_PAUSED
-        self._client.pause()
+        if not self._playing and self._state is not STATE_PAUSED:
+            self._playing = False
+            self._state = STATE_PAUSED
+            self._client.pause()
 
     def media_next_track(self):
         """Send next track command."""
